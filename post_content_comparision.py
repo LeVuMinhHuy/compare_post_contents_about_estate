@@ -35,22 +35,22 @@ def get_from_api(post_content):
                     json_response[0]["tags"]
                 ))
         ):
-            if content["type"] == "addr_street":
+            if content["type"] == "addr_street" and content["content"] not in data_attrs["attr_addr_street"]:
                 data_attrs["attr_addr_street"] += content["content"] + ", "
 
-            elif content['type'] == "addr_ward":
+            elif content['type'] == "addr_ward" and content["content"] not in data_attrs["attr_addr_ward"]:
                 data_attrs["attr_addr_ward"] += content["content"] + ", "
 
-            elif content['type'] == "addr_district":
+            elif content['type'] == "addr_district" and content["content"] not in data_attrs["attr_addr_district"]:
                 data_attrs["attr_addr_district"] += content["content"] + ", "
 
-            elif content['type'] == "addr_city":
+            elif content['type'] == "addr_city" and content["content"] not in data_attrs["attr_addr_city"]:
                 data_attrs["attr_addr_city"] += content["content"] + ", "
 
-            elif content['type'] == "surrounding":
+            elif content['type'] == "surrounding" and content["content"] not in data_attrs["attr_surrounding_name"]:
                 data_attrs["attr_surrounding_name"] += content["content"] + ", "
 
-            elif content["type"] == "surrounding_characteristics":
+            elif content["type"] == "surrounding_characteristics" and content["content"] not in data_attrs["attr_surrounding_characteristics"]:
                 data_attrs['attr_surrounding_characteristics'] += content["content"] + ", "
 
     except:
@@ -84,6 +84,7 @@ def requestToString(data):
 
         for word in new_bagOfWord:
             stringRequest += word + " "
+    print(stringRequest)
 
     return stringRequest
 
@@ -107,7 +108,8 @@ with open('data.json', 'rb') as json_data:
         if not requestDict.get(key):  ## O(1)
             requestDict[key] = data['id']
         else:
-            print("Two posts:", data['id'], "and", requestDict.get(key), "are identical.")
+            print("Two posts:", data['id'], "and", requestDict.get(key), "are identical. \n")
+            # print(request)
 
     print(requestDict)
 
